@@ -18,5 +18,4 @@ from django.urls import path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('youteub_app/', admin.site.urls),
 ]
