@@ -1,0 +1,82 @@
+{% extends 'base.html'%}
+
+{% load crispy_forms_tags %}
+
+{% block title %}Home{% endblock%}
+
+
+{% block content %}
+
+{% if registered %}
+	<h1> Thanks for registering! </h1>
+{% else %}
+	<h1> Fill the signup form : </h1>
+	
+	<form enctype='multipart/form-data' method="POST">
+		{% csrf_token %}
+		
+		<div class="row">
+			<div class="col-4 offset-sm-1">
+				{{ user_form.username |as_crispy_field }}
+			</div>
+			<div class="col-4 offset-sm-1">
+				{{ user_form.password |as_crispy_field }}
+			</div>
+		</div>
+		
+		<div class="row">
+			
+			<div class="col-4 offset-sm-1">
+				{{ user_form.first_name |as_crispy_field }}
+			</div>
+
+			<div class="col-4 offset-sm-1">
+				{{ user_form.last_name |as_crispy_field }}
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-6 offset-sm-1">
+				{{ user_form.email |as_crispy_field }}
+			</div>
+	 	</div>
+		
+		<br>
+
+		<div clas="row">
+			<div class="col-3 offset-sm-1 p-0" id="birth">
+			{{profile_form.birth_date}}
+			</div>
+		</div>
+
+		<br>
+		
+		<div clas="row m-5">
+			<div class="col-3 offset-sm-1 p-0" >
+				{{profile_form.bio |as_crispy_field }}
+			</div>
+		</div>
+
+		<div clas="row m-5">
+			<div class="col-3 offset-sm-1 p-0" >
+				{{profile_form.profile_pic |as_crispy_field}}
+			</div>
+		</div>
+
+		<br>
+
+		<div clas="row m-5">
+			<div class="col-3 offset-sm-1 p-0" >
+		<button type="submit" class="btn btn-success" value="signup"> Signup
+			</button>
+			</div>
+		</div>
+
+		<br>
+	</form>
+
+{% endif %}
+
+{% endblock %}
+
+{% block footer %}{% endblock %}
