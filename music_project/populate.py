@@ -19,7 +19,7 @@ def get_videos(playlist):
 	videos = requests.get(playlist_api_url).json()
 
 	for video in videos['items']:
-		video_id = video['id']
+		video_id = video['snippet']['resourceId']['videoId']
 		title = video['snippet']['title']
 		description = video['snippet']['description']
 		thumbnail_url = video['snippet']['thumbnails']['default']['url']

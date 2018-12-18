@@ -19,7 +19,7 @@ class Playlist(models.Model):
 
 class Video(models.Model):
 	title = models.CharField(max_length=400)
-	video_id = models.CharField(max_length=400, unique=True)
+	video_id = models.CharField(max_length=400, unique=False)
 	description = models.CharField(max_length=2000)
 	thumbnail_url = models.CharField(max_length=2000, validators=[URLValidator()])
 	playlist = models.ForeignKey(Playlist, on_delete=models.CASCADE)
