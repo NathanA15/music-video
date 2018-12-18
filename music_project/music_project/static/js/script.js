@@ -1,6 +1,6 @@
 $(document).ready(function () {
 	
-	$('#article-form').on('submit', function(){
+	$('#comment-form').on('submit', function(){
 		event.preventDefault();
 		writeComment();
 	})
@@ -9,16 +9,14 @@ $(document).ready(function () {
 
 function writeComment() {
 	$.ajax({
-		url: 'comment_app/write_comment/' ,
+		url: 'http://127.0.0.1:8000/comment_app/write_comment/' + $('#video-id').attr('video-id') ,
 		type: 'POST',
 		data: {
-			title: $("#id_title").val(),
-			content: $("#id_content").val(),
+			text: $("#comment_text").val(),
 		},
 		success: function(json) {
-			$("#id_title").val('');
-			$("#id_content").val('');
-			addArticle(json);
+			$("#comment_text").val('');
+			addComment(json);
 		},
 		error: function(xhr, errmsg, err) {
 			alert('Something went wrong!');
@@ -28,18 +26,17 @@ function writeComment() {
 }
 
 
-function addArticle(article) {
-	var articleHTML = ` 
+function addComment(comment) {
+	var commentHTML = ` 
 		<hr>
-		<h3>` +article.title+ `</h3>
-		<p>` +article.content+ `</p>`;
+		<p>` +commment.text+ `</p>`;
 
-	$('#articles').prepend(articleHTML);
+	$('#comments').prepend(commentHTML);
 
 }
 
 
-
+$(document).ready(function () {
 $(function() {
     function getCookie(name) {
         var cookieValue = null;
@@ -78,4 +75,6 @@ $(function() {
             }
         }
     });
+}); 
+
 });
