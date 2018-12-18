@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from video_app.models import Playlist, Video
+from comment_app.models import Comment 
+from comment_app.forms import CommentForm
 
 # Create your views here.
 
@@ -8,4 +10,5 @@ def index(request):
 
 def get_video(request, video_id):
 	video = Video.objects.get(video_id= video_id)
-	return render(request, 'video_page.html', {'video':video} )
+	comments = Comment.objects.get(video_id=video_id)
+	return render(request, 'video_page.html', {'video':video, 'comments':comments, 'comment_form':CommentForm } )

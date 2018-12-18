@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render
 from profile_app.models import UserProfileInfo
 from video_app.models import Video
+from comment_app.models import Comment
 
 # Create your views here.
 def write_comment(request, video_id):
@@ -25,7 +26,7 @@ def write_comment(request, video_id):
 			'video': comment.video,
 		}
 
-		return return JsonResponse(response_data)
+		return JsonResponse(response_data)
 
 	else:
 		error = {'error': 'Non POST method not allowed'}
