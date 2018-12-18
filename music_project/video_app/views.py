@@ -10,5 +10,6 @@ def index(request):
 
 def get_video(request, video_id):
 	video = Video.objects.get(video_id= video_id)
-	comments = Comment.objects.get(video_id=video_id)
+	comments = Comment.objects.filter(video=video)
+
 	return render(request, 'video_page.html', {'video':video, 'comments':comments, 'comment_form':CommentForm } )
