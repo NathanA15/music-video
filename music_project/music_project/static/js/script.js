@@ -12,10 +12,10 @@ function writeComment() {
 		url: 'http://127.0.0.1:8000/comment_app/write_comment/' + $('#video-id').attr('video-id') ,
 		type: 'POST',
 		data: {
-			text: $("#comment_text").val(),
+			text: $("#id_text").val(),
 		},
 		success: function(json) {
-			$("#comment_text").val('');
+			$("#id_text").val('');
 			addComment(json);
 		},
 		error: function(xhr, errmsg, err) {
@@ -29,7 +29,7 @@ function writeComment() {
 function addComment(comment) {
 	var commentHTML = ` 
 		<hr>
-		<p>` +commment.text+ `</p>`;
+		<p>` +comment.text+ `</p>`;
 
 	$('#comments').prepend(commentHTML);
 

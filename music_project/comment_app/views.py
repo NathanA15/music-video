@@ -3,6 +3,7 @@ from django.shortcuts import render
 from profile_app.models import UserProfileInfo
 from video_app.models import Video
 from comment_app.models import Comment
+from django.http import JsonResponse
 
 # Create your views here.
 def write_comment(request, video_id):
@@ -21,9 +22,9 @@ def write_comment(request, video_id):
 			'result': 'success',
 			'id': comment.id,
 			'text': comment.text,
-			'userprofileinfo': comment.userprofileinfo,
+			'userprofileinfo': comment.userprofileinfo.user.username,
 			'date': comment.date,
-			'video': comment.video,
+			'video': comment.video.title,
 		}
 
 		return JsonResponse(response_data)
