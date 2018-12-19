@@ -1,0 +1,41 @@
+.playlists {
+	border-right: solid grey;
+}
+
+.playlist {
+	border-bottom: solid red;
+	margin: 5px 10px;
+}
+
+.playlist h5, h2 {
+	text-align: center;
+}
+
+.playlist img {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
+	padding-top: 5%
+}
+
+.last-videos {
+	margin-left: 20px;
+	float: left;
+
+} 
+
+.last-video {
+	float: left;
+	height: 200px;
+	border: solid grey;
+	
+}
+
+.last-video img {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
+	padding-top: 5%
+}

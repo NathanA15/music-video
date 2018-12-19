@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Home Page{% endblock %}
+
+
+{% block content%}
+	<div class="row">
+		<div class="col-3 playlists">
+			<h2>Playlists</h2>
+			{% for playlist in playlists %}
+				<div class="playlist">
+					<img src="{{playlist.thumbnail_url}}">
+					<h5>{{playlist.title}}</h5>
+				</div>
+			{% endfor %}
+		</div>
+
+		<div class="col last-videos">
+			<h2>Last Videos</h2>
+			{% for video in videos %}
+				<div class="last-video col-4">
+					<img src="{{video.thumbnail_url}}">
+					<h5>{{video.title}}</h5>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+
+
+{% endblock %}
