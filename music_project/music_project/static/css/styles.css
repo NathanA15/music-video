@@ -39,3 +39,8 @@
 	width: 50%;
 	padding-top: 5%
 }
+
+.size_screen{
+	width:100%;
+	min-height: 550px;
+}
