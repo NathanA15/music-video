@@ -1,12 +1,50 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Test video </title>
-</head>
-<body>
+{% extends 'base.html'%}
+{% load staticfiles %}
+{% block title %}Video Page{% endblock%}
 
-<div class="container">
-	<iframe width="560" height="315" src="https://www.youtube.com/embed/{{video.video_id}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
-</body>
-</html>
+
+{% block content %}
+
+
+
+
+	<div class="row mt-5 ">
+			<div class="col-sm-7 offset-sm-1">
+				<div class="row">
+					<iframe class='size_screen' src="https://www.youtube.com/embed/{{video.video_id}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+				</div>
+			</div>
+
+			<div class="col-sm-3 offset-sm-1">
+				<br>
+				<div class="row">
+					<div class="card border-secondary mb-3" style="max-width: 24rem;">
+		  				<div class="card-header text-center"> All videos from the playlist</div>
+		  				<br>
+		  				{% for video in all_videos %}
+
+			  				<div class="row">
+			  					<div class="col-sm-5 offset-sm-1">
+			  						<img src='{{video.thumbnail_url}}'>
+
+			  					</div>
+
+			  					<div class="col-sm-6">
+			  						<p> {{video.title}} </p>
+			  						
+
+			  					</div>
+			  					
+			  				</div>
+			  				<hr>
+			  			{% endfor %}	
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	
+
+
+{% endblock %}
