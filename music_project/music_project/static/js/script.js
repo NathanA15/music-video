@@ -9,7 +9,7 @@ $(document).ready(function () {
 
 function writeComment() {
 	$.ajax({
-		url: 'http://127.0.0.1:8000/comment_app/write_comment/' + $('#video-id').attr('video-id') ,
+		url: '/comment_app/write_comment/' + $('#video-id').attr('video-id') ,
 		type: 'POST',
 		data: {
 			text: $("#id_text").val(),
