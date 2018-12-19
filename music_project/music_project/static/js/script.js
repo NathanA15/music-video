@@ -5,7 +5,38 @@ $(document).ready(function () {
 		writeComment();
 	})
 
-})
+});
+
+$('#likeVideo').on('click', function() {
+        likeVideo();
+        console.log('cliqué')
+    });
+
+function likeVideo(){
+    var video_id = $('#iframe-video').data('video-id');
+    $.ajax({
+            url: '/video_app/like_video/',
+            type: 'POST',
+            data: {
+                video_id : video_id
+            }
+
+            
+        })
+        .done(function(data){
+            if(data.code == 200){
+                var nb_likes = data.nb_likes;
+                var has_liked = data.has_liked;
+                $('#nb_likes').text(nb_likes);
+                if (has_liked) {
+                    $('#heart_pic').attr("src","/static/images/like_button.png");
+                } else {
+                    $('#heart_pic').attr("src","/static/images/not_like_button.png");
+                }
+            }
+        })
+}
+
 
 function writeComment() {
 	$.ajax({
