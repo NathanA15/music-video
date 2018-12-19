@@ -8,4 +8,5 @@ urlpatterns = [
 	path('playlist_page/<playlist_id>/', views.playlist_page, name='playlist_page'),
 	path('index/', views.index, name='index'),
 	path('video_page/<video_id>/', views.get_video, name='video_page'),
+	path('like_video/', views.like_video, name='like_video'),
 ]

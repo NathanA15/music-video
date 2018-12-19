@@ -8,7 +8,27 @@
 	<div class="row mt-5 ">
 			<div class="col-sm-7 offset-sm-1">
 				<div class="row">
-					<iframe class='size_screen' src="https://www.youtube.com/embed/{{video.video_id}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+						<iframe id='iframe-video' class='size_screen' src="https://www.youtube.com/embed/{{video.video_id}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-video-id='{{video.video_id}}'></iframe>		
+				</div>
+					<br>
+				<h5> {{video.title}} <h5>
+				<!-- <button id="likeVideo" class="btn btn-primary">Like</button> -->
+				<div class="row">
+					<div class="col-sm-3 ">
+						<div class='row'>
+							<p> Number of likes : </p>
+							<p id='nb_likes'>{{nb_likes}}</p>
+						</div>
+					</div>
+					<div class="col-sm-1 ">
+						<div id="likeVideo">
+							{% if has_liked %}
+								<img  class="like-button" id='heart_pic' src="{% static 'images/like_button.png'%}">
+							{% else %}
+								<img class="like-button" id='heart_pic' src="{% static 'images/not_like_button.png'%}">
+							{% endif%}
+						</div>
+					</div>
 				</div>
 				<div class="row">
 					{% if not comments%}
@@ -56,6 +76,7 @@
 				</div>
 			</div>
 		</div>
+
 
 
 
