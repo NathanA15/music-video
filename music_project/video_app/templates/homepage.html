@@ -7,20 +7,24 @@
 		<div class="col-3 playlists">
 			<h2>Playlists</h2>
 			{% for playlist in playlists %}
-				<div class="playlist">
-					<img src="{{playlist.thumbnail_url}}">
-					<h5>{{playlist.title}}</h5>
-				</div>
+				<a href="{% url 'video_app:playlist_page' playlist.playlist_id %}">
+					<div class="playlist">
+						<img src="{{playlist.thumbnail_url}}">
+						<h5>{{playlist.title}}</h5>
+					</div>
+				</a>
 			{% endfor %}
 		</div>
 
 		<div class="col last-videos">
 			<h2>Last Videos</h2>
 			{% for video in videos %}
-				<div class="last-video col-4">
-					<img src="{{video.thumbnail_url}}">
-					<h5>{{video.title}}</h5>
-				</div>
+				<a href="{% url 'video_app:video_page' video.video_id %}">
+					<div class="last-video col-4">
+						<img src="{{video.thumbnail_url}}">
+						<h5>{{video.title}}</h5>
+					</div>
+				</a>
 			{% endfor %}
 		</div>
 	</div>
