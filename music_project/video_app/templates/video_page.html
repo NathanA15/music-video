@@ -1,0 +1,31 @@
+{% extends 'base.html'%}
+{% load staticfiles %}
+{% block title %}Video Page{% endblock%}
+
+
+{% block content %}
+
+<h1> All the videos </h1>
+	
+
+
+<span id="video-id" video-id="{{video.video_id}}"></span>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/{{video.video_id}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% if not comments%}
+	<p>there's no comment for this app</p>
+{% else %}
+{% for comment in comments%}
+<div id="comments"></div>
+<p>{{comment.text}}</p>
+
+{% endfor %}
+{% endif %}
+
+
+<form action="" method="POST" id="comment-form">
+			{% csrf_token %}
+			{{ comment_form.as_p }}
+			<input type="submit" name="submit">
+		</form>
+
+{% endblock %}
