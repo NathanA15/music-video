@@ -1,0 +1,18 @@
+{% extends 'base.html'%}
+{% block title %}Playlist Page{% endblock %}
+
+{% block content %}
+	<h1>PLAYLIST PAGE</h1>
+	<h1>{{playlist.title}}</h1>
+	<h3>{{playlist.description}}</h3>
+	<img src="{{playlist.thumbnail_url}}">
+	<br>
+	{% for video in videos %}
+		<div class="last-video col-3">
+			<img src="{{video.thumbnail_url}}">
+			<h5>{{video.title}}</h5>
+		</div>
+	{% endfor %}
+
+
+{% endblock %}
