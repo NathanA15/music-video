@@ -5,27 +5,57 @@
 
 {% block content %}
 
-<h1> All the videos </h1>
-	
+	<div class="row mt-5 ">
+			<div class="col-sm-7 offset-sm-1">
+				<div class="row">
+					<iframe class='size_screen' src="https://www.youtube.com/embed/{{video.video_id}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+				</div>
+			</div>
+
+			<div class="col-sm-3 offset-sm-1">
+				<br>
+				<div class="row">
+					<div class="card border-secondary mb-3" style="max-width: 24rem;">
+		  				<div class="card-header text-center"> All videos from the playlist</div>
+		  				<br>
+		  				{% for video in all_videos %}
+
+			  				<div class="row">
+			  					<div class="col-sm-5 offset-sm-1">
+			  						<img src='{{video.thumbnail_url}}'>
+
+			  					</div>
+
+			  					<div class="col-sm-6">
+			  						<p> {{video.title}} </p>
+			  						
+
+			  					</div>
+			  					
+			  				</div>
+			  				<hr>
+			  			{% endfor %}	
+					</div>
+				</div>
+			</div>
+		</div>
 
 
-<span id="video-id" video-id="{{video.video_id}}"></span>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/{{video.video_id}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-{% if not comments%}
-	<p>there's no comment for this app</p>
-{% else %}
-{% for comment in comments%}
-<div id="comments"></div>
-<p>{{comment.text}}</p>
+	{% if not comments%}
+		<p>there's no comment for this app</p>
+	{% else %}
+		{% for comment in comments%}
+			<div id="comments"></div>
+			<p>{{comment.text}}</p>
 
-{% endfor %}
-{% endif %}
+		{% endfor %}
+	{% endif %}
 
 
-<form action="" method="POST" id="comment-form">
-			{% csrf_token %}
-			{{ comment_form.as_p }}
-			<input type="submit" name="submit">
-		</form>
+	<form action="" method="POST" id="comment-form">
+		{% csrf_token %}
+		{{ comment_form.as_p }}
+		<input type="submit" name="submit">
+	</form>
 
 {% endblock %}
