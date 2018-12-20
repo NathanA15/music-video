@@ -105,6 +105,52 @@ def like_video(request):
 
 
 
+def search_video(request, search):
+
+		videos = Video.objects.filter(title__icontains = search)
+		nb_results = len(videos)
+		if len(videos) != 0 : 
+			if request.user.is_authenticated:
+				user = request.user
+
+				return render(request, 'search_results.html', {
+					'videos': videos, 
+					'logged_in': True,
+					'nb_results': nb_results,
+					'search':search,
+					})
+
+			else :
+
+				return render(request, 'search_results.html', {
+					'videos': videos, 
+					'nb_results': nb_results,
+					'search':search,
+					})
+
+		else:
+
+			if request.user.is_authenticated:
+				user = request.user
+
+				return render(request, 'search_results.html', {
+					'videos': videos, 
+					'logged_in': True,
+					'nb_results': nb_results,
+					'no_result':True,
+					})
+
+			else :
+
+				return render(request, 'search_results.html', {
+					'videos': videos, 
+					'nb_results': nb_results,
+					'no_result':True,
+					})
+
+
+
+
 
 
 

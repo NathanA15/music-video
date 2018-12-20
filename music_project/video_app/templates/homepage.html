@@ -17,14 +17,32 @@
 		</div>
 
 		<div class="col last-videos">
-			<h2>Last Videos</h2>
+			<h2>Latest Videos</h2>
+
+			<hr> <br>
 			{% for video in videos %}
 				<a href="{% url 'video_app:video_page' video.video_id %}">
-					<div class="last-video col-4">
-						<img src="{{video.thumbnail_url}}">
-						<h5>{{video.title}}</h5>
+							
+	  				<div class="card-body">
+	  					<div class= 'row'>
+		  					<div class="col-sm-2 ">
+		  						<img style='min-height: 150px; min-width: 250px;' src="{{video.thumbnail_url}}">
+		  					</div>
+
+		  					<div class='col-sm-6 offset-sm-1'>
+		  						<div id='title' class='row'>
+		   							<h3>{{video.title}}</h3>
+		   						</div>
+
+		   						<div id='description' class='row'>
+		   							<p>{{video.description}}</p>
+		   						</div>
+		 				 	</div>
+		 					
+						</div>
 					</div>
-				</a>
+				
+		</a>
 			{% endfor %}
 		</div>
 	</div>
