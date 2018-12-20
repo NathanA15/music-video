@@ -9,7 +9,6 @@ $(document).ready(function () {
 
 $('#likeVideo').on('click', function() {
         likeVideo();
-        console.log('cliqué')
     });
 
 function likeVideo(){
@@ -65,6 +64,36 @@ function addComment(comment) {
 	$('#comments').prepend(commentHTML);
 
 }
+
+$('#btnSearch').on('click', function() {
+        searchVideo();
+        $('#txtVideoSearch').focus();
+    });
+
+
+$('#txtVideoSearch').on('keypress', function(event) {
+    if(event.which == 13) {
+        event.preventDefault();
+        searchVideo();
+        $('#txtVideoSearch').focus();
+    }
+});
+
+
+
+
+
+function searchVideo(){
+    var search = $('#txtVideoSearch').val();
+    if(search.trim() == "") {
+            alert("You must enter text");
+            return;
+    }
+    window.location.replace("/video_app/search_video/" + search +"/");
+}
+
+
+
 
 
 $(document).ready(function () {

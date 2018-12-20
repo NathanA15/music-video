@@ -1,9 +1,9 @@
 .playlists {
-	border-right: solid grey;
+	border-right: solid 1px #7f8fa6;
 }
 
 .playlist {
-	border-bottom: solid red;
+	border-bottom: solid 1px #7f8fa6;
 	margin: 5px 10px;
 }
 
@@ -51,3 +51,74 @@
 	position: relative;
 	top: 0px;
 }
+
+
+.test-pos{
+	position: relative;
+	left: 60%;
+}
+
+.nav-username {
+	margin: 0 1em;
+}
+
+.nav-login-pic {
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+}
+
+.nav-login-bloc {
+	right: -60%;
+	margin-left: 45px;
+
+
+}
+
+.nav-login-bloc a:hover {
+	text-decoration: none;
+	white-space: nowrap;
+}
+
+.log-sign-button a{
+	margin-left: 45px;
+	white-space: nowrap;
+}
+
+.container-nav{
+	display: flex;
+	justify-content: flex-end;
+	align-items: baseline;
+
+}
+
+.container-navbar{
+	display: flex;
+	align-items: baseline;
+}
+
+
+#logo-yt{
+	margin-right: 6rem;
+}
+
+#search-bar{
+	margin-right: 8rem;
+	white-space: nowrap;
+}
+
+
+
+#title{
+  color: #2f3640;
+}
+
+#description{
+  color: #7f8fa6;
+}
+
+
+a:hover {
+  text-decoration: none;
+}
+

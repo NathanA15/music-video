@@ -15,13 +15,23 @@ def get_all_video_from_playlist(playlist_id):
 
 # Create your views here.
 def homepage(request):
+
 	playlists = Playlist.objects.all()
 	last_videos = Video.objects.order_by('id')[0:20]
-
-	return render(request, 'homepage.html', context ={
-			'playlists': playlists,
-			'videos': last_videos
-		})
+	if request.user.is_authenticated:
+		user = request.user
+		return render(request, 'homepage.html', context ={
+				'playlists': playlists,
+				'videos': last_videos,
+				'logged_in':True,
+				'user':user
+			})
+	else : 
+		return render(request, 'homepage.html', context ={
+				'playlists': playlists,
+				'videos': last_videos,
+				'logged_in':False,
+			})
 
 
 def playlist_page(request, playlist_id):
@@ -29,7 +39,7 @@ def playlist_page(request, playlist_id):
 	# playlist = Playlist.objects.get(playlist_id=playlist_id)
 	playlist_videos = Video.objects.filter(playlist__playlist_id=playlist_id)
 
-	return render(request, 'playlist_page.html', context={'videos':playlist_videos, 'playlist': Playlist.objects.get(playlist_id=playlist_id)})
+	return render(request, 'playlist_page.html', context={'videos':playlist_videos, 'playlist': Playlist.objects.get(playlist_id=playlist_id), 'logged_in':True, 'user':user})
 
 
 def index(request):
@@ -40,7 +50,7 @@ def get_video(request, video_id):
 	user = request.user
 	user_p = UserProfileInfo.objects.get(user= user)
 	has_liked = False
-	video = Video.objects.get(video_id= video_id)
+	video = Video.objects.filter(video_id= video_id)[0]
 	videos_from_playlist = get_all_video_from_playlist(video.playlist.playlist_id)
 	comments = Comment.objects.filter(video=video)
 	all_likes = video.liked_by.all()
@@ -56,7 +66,7 @@ def get_video(request, video_id):
 	print(nb_likes)
 	print('###################')
 
-	return render(request, 'video_page.html', {'video':video, 'all_videos':videos_from_playlist, 'comments':comments, 'comment_form':CommentForm, 'nb_likes':nb_likes, 'has_liked':has_liked} )
+	return render(request, 'video_page.html', {'video':video, 'all_videos':videos_from_playlist, 'comments':comments, 'comment_form':CommentForm, 'nb_likes':nb_likes, 'has_liked':has_liked, 'logged_in':True, 'user':user} )
 
 
 @login_required
@@ -66,7 +76,7 @@ def like_video(request):
 
 	if request.method == 'POST':
 		video_id = request.POST.get('video_id')
-		video = Video.objects.get(video_id= video_id)
+		video = Video.objects.filter(video_id= video_id)[0]
 		
 		has_liked = False
 		all_likes = video.liked_by.all()
@@ -92,6 +102,52 @@ def like_video(request):
 	else:
 		error = {'error': 'None POST method allowed'}
 		return HttpResponse(error)
+
+
+
+def search_video(request, search):
+
+		videos = Video.objects.filter(title__icontains = search)
+		nb_results = len(videos)
+		if len(videos) != 0 : 
+			if request.user.is_authenticated:
+				user = request.user
+
+				return render(request, 'search_results.html', {
+					'videos': videos, 
+					'logged_in': True,
+					'nb_results': nb_results,
+					'search':search,
+					})
+
+			else :
+
+				return render(request, 'search_results.html', {
+					'videos': videos, 
+					'nb_results': nb_results,
+					'search':search,
+					})
+
+		else:
+
+			if request.user.is_authenticated:
+				user = request.user
+
+				return render(request, 'search_results.html', {
+					'videos': videos, 
+					'logged_in': True,
+					'nb_results': nb_results,
+					'no_result':True,
+					})
+
+			else :
+
+				return render(request, 'search_results.html', {
+					'videos': videos, 
+					'nb_results': nb_results,
+					'no_result':True,
+					})
+
 
 
 

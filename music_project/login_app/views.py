@@ -29,7 +29,7 @@ def signup(request):
 			profile.save()
 			registered = True
 			login(request, user)
-			return redirect('/di_main_app/home/', permanent=False)
+			return redirect('/video_app/homepage/', permanent=False)
 
 
 		else : 
@@ -61,7 +61,7 @@ def log_in(request):
 			if user is not None:
 				login(request, user)
 				print('Logged In: {}'.format(user))
-				return redirect('/di_main_app/home/', permanent=False)
+				return redirect('/video_app/homepage/', permanent=False)
 				
 			else:
 				errors = True
