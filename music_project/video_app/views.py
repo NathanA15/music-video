@@ -38,8 +38,13 @@ def playlist_page(request, playlist_id):
 	print('###############')
 	# playlist = Playlist.objects.get(playlist_id=playlist_id)
 	playlist_videos = Video.objects.filter(playlist__playlist_id=playlist_id)
+	if request.user.is_authenticated:
+		user = request.user
 
-	return render(request, 'playlist_page.html', context={'videos':playlist_videos, 'playlist': Playlist.objects.get(playlist_id=playlist_id), 'logged_in':True, 'user':user})
+		return render(request, 'playlist_page.html', context={'videos':playlist_videos, 'playlist': Playlist.objects.get(playlist_id=playlist_id), 'logged_in':True, 'user':user})
+	else : 
+
+		return render(request, 'playlist_page.html', context={'videos':playlist_videos, 'playlist': Playlist.objects.get(playlist_id=playlist_id), 'logged_in':False})
 
 
 def index(request):
