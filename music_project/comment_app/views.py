@@ -13,7 +13,7 @@ def write_comment(request, video_id):
 		user = request.user
 		userprofileinfo = UserProfileInfo.objects.get(user=user)
 		text = request.POST.get('text')
-		video = Video.objects.get(video_id=video_id)
+		video = Video.objects.filter(video_id=video_id)[0]
 		comment = Comment(text=text, userprofileinfo = userprofileinfo, video=video)
 		comment.save()
 
