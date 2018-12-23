@@ -146,3 +146,4 @@ MEDIA_URL = '/media/'
 
 LOGIN_URL = '/login_app/login'
 django_heroku.settings(locals())
+
