@@ -1,39 +1,110 @@
 $(document).ready(function () {
+
+	var tag = document.createElement('script');
+
+	tag.src = "https://www.youtube.com/iframe_api";
+	var firstScriptTag = document.getElementsByTagName('script')[0];
+	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
 	
 	$('#comment-form').on('submit', function(){
 		event.preventDefault();
 		writeComment();
-	})
-
+	});
+	initializePlayer();
 });
 
 $('#likeVideo').on('click', function() {
-        likeVideo();
-    });
+		likeVideo();
+});
+
+var makeCount = true;
+
+function onYouTubeIframeAPIReady() {
+  playerAPIReady = true;
+}
+// 3. This function creates an <iframe> (and YouTube player)
+//    after the API code downloads.
+var player;
+function initializePlayer() {
+	player = new YT.Player('iframe-video', {
+		videoId: $('#iframe-video').data('video-id'),
+		events: {
+			'onReady': onPlayerReady,
+			'onStateChange': onPlayerStateChange
+			}
+	});
+}
+
+// 4. The API will call this function when the video player is ready.
+function onPlayerReady(event) {
+	console.log('playvideo');
+	event.target.playVideo();
+}
+
+// 5. The API calls this function when the player's state changes.
+//    The function indicates that when playing a video (state=1),
+//    the player should play for six seconds and then stop.
+var done = false;
+function onPlayerStateChange(event) {
+	console.log('onStateChange');
+	if (event.data == YT.PlayerState.PLAYING && !done) {
+		setTimeout(stopVideo, 6000);
+		done = true;
+	}
+}
+
+function stopVideo() {
+	console.log('stopVideo');
+	player.stopVideo();
+}
+
+// $('#iframe-video').on('click', function() {
+// 	console.log('##########');
+// 	console.log('azertyuiokjhgfds');
+
+// 	var video_id = $('#iframe-video').data('video-id');
+// 	if (makeCount) {
+// 		$.ajax({
+// 			url:  '/video_app/add_view_count/',
+// 			type: 'POST',
+// 			data: {
+// 				video_id: video_id,
+// 			},
+// 			success: function(json) {
+// 				$('#view-count').val(json.count);
+// 				makeCount = false;
+// 			},
+// 			error: function(xhr, errmsg, err) {
+// 				console.log(errmsg, err);
+// 			},
+// 		});
+// 	};	
+// })
+
 
 function likeVideo(){
-    var video_id = $('#iframe-video').data('video-id');
-    $.ajax({
-            url: '/video_app/like_video/',
-            type: 'POST',
-            data: {
-                video_id : video_id
-            }
+	var video_id = $('#iframe-video').data('video-id');
+	$.ajax({
+			url: '/video_app/like_video/',
+			type: 'POST',
+			data: {
+				video_id : video_id
+			}
+	})
 
-            
-        })
-        .done(function(data){
-            if(data.code == 200){
-                var nb_likes = data.nb_likes;
-                var has_liked = data.has_liked;
-                $('#nb_likes').text(nb_likes);
-                if (has_liked) {
-                    $('#heart_pic').attr("src","/static/images/like_button.png");
-                } else {
-                    $('#heart_pic').attr("src","/static/images/not_like_button.png");
-                }
-            }
-        })
+	.done(function(data){
+		if(data.code == 200){
+			var nb_likes = data.nb_likes;
+			var has_liked = data.has_liked;
+			$('#nb_likes').text(nb_likes);
+			if (has_liked) {
+				$('#heart_pic').attr("src","/static/images/like_button.png");
+			} else {
+				$('#heart_pic').attr("src","/static/images/not_like_button.png");
+			}
+		}
+	});
 }
 
 
@@ -66,17 +137,17 @@ function addComment(comment) {
 }
 
 $('#btnSearch').on('click', function() {
-        searchVideo();
-        $('#txtVideoSearch').focus();
-    });
+		searchVideo();
+		$('#txtVideoSearch').focus();
+	});
 
 
 $('#txtVideoSearch').on('keypress', function(event) {
-    if(event.which == 13) {
-        event.preventDefault();
-        searchVideo();
-        $('#txtVideoSearch').focus();
-    }
+	if(event.which == 13) {
+		event.preventDefault();
+		searchVideo();
+		$('#txtVideoSearch').focus();
+	}
 });
 
 
@@ -84,12 +155,12 @@ $('#txtVideoSearch').on('keypress', function(event) {
 
 
 function searchVideo(){
-    var search = $('#txtVideoSearch').val();
-    if(search.trim() == "") {
-            alert("You must enter text");
-            return;
-    }
-    window.location.replace("/video_app/search_video/" + search +"/");
+	var search = $('#txtVideoSearch').val();
+	if(search.trim() == "") {
+			alert("You must enter text");
+			return;
+	}
+	window.location.replace("/video_app/search_video/" + search +"/");
 }
 
 
@@ -97,44 +168,43 @@ function searchVideo(){
 
 
 $(document).ready(function () {
-$(function() {
-    function getCookie(name) {
-        var cookieValue = null;
-        if (document.cookie && document.cookie != '') {
-            var cookies = document.cookie.split(';');
-            for (var i = 0; i < cookies.length; i++) {
-                var cookie = jQuery.trim(cookies[i]);
-                if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-    var csrftoken = getCookie('csrftoken');
+	$(function() {
+		function getCookie(name) {
+			var cookieValue = null;
+			if (document.cookie && document.cookie != '') {
+				var cookies = document.cookie.split(';');
+				for (var i = 0; i < cookies.length; i++) {
+					var cookie = jQuery.trim(cookies[i]);
+					if (cookie.substring(0, name.length + 1) == (name + '=')) {
+						cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+						break;
+					}
+				}
+			}
+			return cookieValue;
+		}
+		var csrftoken = getCookie('csrftoken');
 
-    function csrfSafeMethod(method) {
-        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-    }
+		function csrfSafeMethod(method) {
+			return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+		}
 
-    function sameOrigin(url) {
-        var host = document.location.host;
-        var protocol = document.location.protocol;
-        var sr_origin = '//' + host;
-        var origin = protocol + sr_origin;
-        return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
-            (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
-            !(/^(\/\/|http:|https:).*/.test(url));
-    }
+		function sameOrigin(url) {
+			var host = document.location.host;
+			var protocol = document.location.protocol;
+			var sr_origin = '//' + host;
+			var origin = protocol + sr_origin;
+			return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+				(url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+				!(/^(\/\/|http:|https:).*/.test(url));
+		}
 
-    $.ajaxSetup({
-        beforeSend: function(xhr, settings) {
-            if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
-                xhr.setRequestHeader("X-CSRFToken", csrftoken);
-            }
-        }
-    });
-}); 
-
+		$.ajaxSetup({
+			beforeSend: function(xhr, settings) {
+				if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
+					xhr.setRequestHeader("X-CSRFToken", csrftoken);
+				}
+			}
+		});
+	});
 });

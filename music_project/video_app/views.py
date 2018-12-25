@@ -154,9 +154,64 @@ def search_video(request, search):
 					})
 
 
+def count_video_watched(request):
+	if request.method == 'POST':
+		print('AAAAAAAAAAAAAAAAAAAAA')
+		# if not request.user.is_authenticated:
+		# 	return False
+
+		video_id = request.POST.get('video_id')
+		video = Video.objects.filter(video_id=video_id)[0]
+		users_views = video.users_views.all()
+
+		if request.user.is_authenticated:
+			user_profile = UserProfileInfo.objects.get(user=request.user)
+
+			if user_profile in users_views:
+				return False
+
+			users_views.append(user_profile)
+			video.nb_views += 1
+		else:
+			video.nb_views += 1
+
+		video.save()
+
+		response = {
+			'count': video.nb_views,
+		}
+
+		return JsonResponse(response)
+
+
+
 
 
 
 
 
 	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

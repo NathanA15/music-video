@@ -25,6 +25,8 @@ class Video(models.Model):
 	thumbnail_url = models.TextField( validators=[URLValidator()])
 	playlist = models.ForeignKey(Playlist, on_delete=models.CASCADE)
 	liked_by = models.ManyToManyField(UserProfileInfo, related_name='likes', blank=True)
+	nb_views = models.PositiveIntegerField(default=0)
+	users_views = models.ManyToManyField(UserProfileInfo, related_name='nb_views', blank=True)
 	
 
 	def __repr__(self):

@@ -10,4 +10,5 @@ urlpatterns = [
 	path('video_page/<video_id>/', views.get_video, name='video_page'),
 	path('like_video/', views.like_video, name='like_video'),
 	path('search_video/<search>/', views.search_video, name='search_video'),
+	path('add_view_count/', views.count_video_watched, name='add_view_count'),
 ]

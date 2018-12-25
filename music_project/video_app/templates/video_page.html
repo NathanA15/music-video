@@ -7,7 +7,7 @@
 
 	<div class="row mt-5 ">
 			<div class="col-sm-7 offset-sm-1">
-				<div class="row">
+				<div class="row youtube-video" id='youtube-video'>
 						<iframe id='iframe-video' class='size_screen' src="https://www.youtube.com/embed/{{video.video_id}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-video-id='{{video.video_id}}'></iframe>		
 				</div>
 					<br>
@@ -15,6 +15,9 @@
 				<!-- <button id="likeVideo" class="btn btn-primary">Like</button> -->
 				<div class="row">
 					<div class="col-sm-3 ">
+						<div class="row">
+							<p>Viewed: <span id='view-count'>{{video.nb_views}}</span></p>
+						</div>
 						<div class='row'>
 							<p> Number of likes : </p>
 							<p id='nb_likes'>{{nb_likes}}</p>
