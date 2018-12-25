@@ -7,8 +7,10 @@
 
 	<div class="row mt-5 ">
 			<div class="col-sm-7 offset-sm-1">
-				<div class="row youtube-video" id='youtube-video'>
-						<iframe id='iframe-video' class='size_screen' src="https://www.youtube.com/embed/{{video.video_id}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-video-id='{{video.video_id}}'></iframe>		
+				<!-- <div class="row youtube-video" id='youtube-video'>
+						<iframe id='iframe-video' class='size_screen' src="https://www.youtube.com/embed/{#video.video_id#}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-video-id='{#video.video_id#}'></iframe>		
+				</div> -->
+				<div id='player' class="row" data-video-id='{{video.video_id}}'>
 				</div>
 					<br>
 				<h5> {{video.title}} <h5>

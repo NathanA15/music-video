@@ -20,25 +20,30 @@ $('#likeVideo').on('click', function() {
 
 var makeCount = true;
 
-function onYouTubeIframeAPIReady() {
-  playerAPIReady = true;
-}
+// 2. This code loads the IFrame Player API code asynchronously.
+var tag = document.createElement('script');
+
+tag.src = "https://www.youtube.com/iframe_api";
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
 // 3. This function creates an <iframe> (and YouTube player)
 //    after the API code downloads.
 var player;
-function initializePlayer() {
-	player = new YT.Player('iframe-video', {
-		videoId: $('#iframe-video').data('video-id'),
-		events: {
-			'onReady': onPlayerReady,
-			'onStateChange': onPlayerStateChange
-			}
+function onYouTubeIframeAPIReady() {
+	player = new YT.Player('player', {
+
+	videoId: $('#player').data('video-id'),
+	events: {
+		'onReady': onPlayerReady,
+		'onStateChange': onPlayerStateChange
+		}
 	});
 }
 
 // 4. The API will call this function when the video player is ready.
 function onPlayerReady(event) {
-	console.log('playvideo');
+	console.log('player ready');
 	event.target.playVideo();
 }
 
@@ -47,44 +52,38 @@ function onPlayerReady(event) {
 //    the player should play for six seconds and then stop.
 var done = false;
 function onPlayerStateChange(event) {
-	console.log('onStateChange');
+	console.log('onplayrrstate');
 	if (event.data == YT.PlayerState.PLAYING && !done) {
-		setTimeout(stopVideo, 6000);
+		// setTimeout(stopVideo, 6000);
 		done = true;
+		console.log('123445678');
+		$.ajax({
+			url:  '/video_app/add_view_count/',
+			type: 'POST',
+			data: {
+				video_id: $('#player').data('video-id'),
+			},
+			success: function(json) {
+				$('#view-count').html(json.count);
+				console.log(json.count);
+			},
+			error: function(xhr, errmsg, err) {
+				console.log(errmsg, err);
+				console.log('video already seen');
+			},
+		});		
 	}
-}
+};
+
 
 function stopVideo() {
-	console.log('stopVideo');
+	console.log('stop')
 	player.stopVideo();
 }
 
-// $('#iframe-video').on('click', function() {
-// 	console.log('##########');
-// 	console.log('azertyuiokjhgfds');
-
-// 	var video_id = $('#iframe-video').data('video-id');
-// 	if (makeCount) {
-// 		$.ajax({
-// 			url:  '/video_app/add_view_count/',
-// 			type: 'POST',
-// 			data: {
-// 				video_id: video_id,
-// 			},
-// 			success: function(json) {
-// 				$('#view-count').val(json.count);
-// 				makeCount = false;
-// 			},
-// 			error: function(xhr, errmsg, err) {
-// 				console.log(errmsg, err);
-// 			},
-// 		});
-// 	};	
-// })
-
 
 function likeVideo(){
-	var video_id = $('#iframe-video').data('video-id');
+	var video_id = $('#player').data('video-id');
 	$.ajax({
 			url: '/video_app/like_video/',
 			type: 'POST',

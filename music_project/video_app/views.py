@@ -170,7 +170,7 @@ def count_video_watched(request):
 			if user_profile in users_views:
 				return False
 
-			users_views.append(user_profile)
+			video.users_views.add(user_profile)
 			video.nb_views += 1
 		else:
 			video.nb_views += 1
